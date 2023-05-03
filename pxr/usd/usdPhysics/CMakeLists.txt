@@ -86,6 +86,7 @@ pxr_library(usdPhysics
         examples/usdPhysicsJoints.usda
         examples/usdPhysicsPairFiltering.usda
         examples/usdPhysicsSpheresWithMaterial.usda
+        images/UsdPhysicsSphericalJointLimitCone.png
 )
 
 pxr_test_scripts(

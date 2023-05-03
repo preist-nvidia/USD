@@ -113,6 +113,7 @@ void wrapUsdPhysicsTokens()
     _AddToken(cls, "physicsLocalPos1", UsdPhysicsTokens->physicsLocalPos1);
     _AddToken(cls, "physicsLocalRot0", UsdPhysicsTokens->physicsLocalRot0);
     _AddToken(cls, "physicsLocalRot1", UsdPhysicsTokens->physicsLocalRot1);
+    _AddToken(cls, "physicsLowerAxisLimit", UsdPhysicsTokens->physicsLowerAxisLimit);
     _AddToken(cls, "physicsLowerLimit", UsdPhysicsTokens->physicsLowerLimit);
     _AddToken(cls, "physicsMass", UsdPhysicsTokens->physicsMass);
     _AddToken(cls, "physicsMaxDistance", UsdPhysicsTokens->physicsMaxDistance);
@@ -124,6 +125,7 @@ void wrapUsdPhysicsTokens()
     _AddToken(cls, "physicsSimulationOwner", UsdPhysicsTokens->physicsSimulationOwner);
     _AddToken(cls, "physicsStartsAsleep", UsdPhysicsTokens->physicsStartsAsleep);
     _AddToken(cls, "physicsStaticFriction", UsdPhysicsTokens->physicsStaticFriction);
+    _AddToken(cls, "physicsUpperAxisLimit", UsdPhysicsTokens->physicsUpperAxisLimit);
     _AddToken(cls, "physicsUpperLimit", UsdPhysicsTokens->physicsUpperLimit);
     _AddToken(cls, "physicsVelocity", UsdPhysicsTokens->physicsVelocity);
     _AddToken(cls, "rotX", UsdPhysicsTokens->rotX);

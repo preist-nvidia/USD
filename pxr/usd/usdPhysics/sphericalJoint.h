@@ -52,10 +52,35 @@ class SdfAssetPath;
 
 /// \class UsdPhysicsSphericalJoint
 ///
-/// Predefined spherical joint type (Removes linear degrees of 
-/// freedom, cone limit may restrict the motion in a given range.) It allows
-/// two limit values, which when equal create a circular, else an elliptic 
-/// cone limit around the limit axis.
+/// Predefined spherical joint type that removes linear degrees of 
+/// freedom, and that provides three rotational degrees of freedom by default.
+/// The rotations can be limited with the cone and axis limit attributes:
+/// 
+/// The lower and upper axis-limit attributes limit rotation around the joint
+/// axis. The axis rotation is locked when the lower limit is larger than the
+/// upper limit.
+/// 
+/// The cone angle 0 and 1 limits create a cone limit with the the joint axis
+/// equal to the cone axis; the cone limit is circular if the two cone angles
+/// are equal, and the cone limit is elliptical if the angles are not equal.
+/// 
+/// Given the joint-axis token, the two cone limit angles map to the specific
+/// joint-frame rotation axes as follows:
+/// 
+/// Joint Axis   |   Cone Angle0 limits   |   Cone Angle 1 limits
+/// -------------|------------------------|----------------------
+/// X        |          Y             |          Z
+/// Y        |          Z             |          X
+/// Z        |          X             |          Y
+/// 
+/// Example: Shown are the aligned spherical-joint frames centered between two
+/// rigid bodies to be joined. The joint axis is set to Y (green), the Cone
+/// Angle 0 is set to 10 degrees and Cone Angle 1 is set to 45 degrees. Note the
+/// narrower cone extent for the rotation around the Z axis (blue) compared to
+/// the X axis (red) rotation.
+/// 
+/// \image html UsdPhysicsSphericalJointLimitCone.png
+/// 
 ///
 /// For any described attribute \em Fallback \em Value or \em Allowed \em Values below
 /// that are text/tokens, the actual token is published and defined in \ref UsdPhysicsTokens.
@@ -160,7 +185,7 @@ public:
     // --------------------------------------------------------------------- //
     // AXIS 
     // --------------------------------------------------------------------- //
-    /// Cone limit axis.
+    /// Joint axis.
     ///
     /// | ||
     /// | -- | -- |
@@ -184,9 +209,9 @@ public:
     // --------------------------------------------------------------------- //
     // CONEANGLE0LIMIT 
     // --------------------------------------------------------------------- //
-    /// Cone limit from the primary joint axis in the local0 frame 
-    /// toward the next axis. (Next axis of X is Y, and of Z is X.) A 
-    /// negative value means not limited. Units: degrees.
+    /// Cone angle that limits rotation symmetrically around the axis
+    /// next to the joint axis. The next axis of X is Y, and of Z is X.
+    /// A negative value means not limited. Units: degrees.
     ///
     /// | ||
     /// | -- | -- |
@@ -208,9 +233,9 @@ public:
     // --------------------------------------------------------------------- //
     // CONEANGLE1LIMIT 
     // --------------------------------------------------------------------- //
-    /// Cone limit from the primary joint axis in the local0 frame 
-    /// toward the second to next axis. A negative value means not limited. 
-    /// Units: degrees.
+    /// Cone angle that limits rotation symmetrically around the axis
+    /// second to next to the joint axis. The second to next axis of X is Z,
+    /// and of Z is Y. A negative value means not limited. Units: degrees.
     ///
     /// | ||
     /// | -- | -- |
@@ -227,6 +252,54 @@ public:
     /// the default for \p writeSparsely is \c false.
     USDPHYSICS_API
     UsdAttribute CreateConeAngle1LimitAttr(VtValue const &defaultValue = VtValue(), bool writeSparsely=false) const;
+
+public:
+    // --------------------------------------------------------------------- //
+    // LOWERAXISLIMIT 
+    // --------------------------------------------------------------------- //
+    /// Lower limit on rotation around the joint axis. Default -inf
+    /// means not limited in negative direction. The axis is locked if the lower
+    /// limit is larger than the upper limit. Units: degrees
+    ///
+    /// | ||
+    /// | -- | -- |
+    /// | Declaration | `float physics:lowerAxisLimit = -inf` |
+    /// | C++ Type | float |
+    /// | \ref Usd_Datatypes "Usd Type" | SdfValueTypeNames->Float |
+    USDPHYSICS_API
+    UsdAttribute GetLowerAxisLimitAttr() const;
+
+    /// See GetLowerAxisLimitAttr(), and also 
+    /// \ref Usd_Create_Or_Get_Property for when to use Get vs Create.
+    /// If specified, author \p defaultValue as the attribute's default,
+    /// sparsely (when it makes sense to do so) if \p writeSparsely is \c true -
+    /// the default for \p writeSparsely is \c false.
+    USDPHYSICS_API
+    UsdAttribute CreateLowerAxisLimitAttr(VtValue const &defaultValue = VtValue(), bool writeSparsely=false) const;
+
+public:
+    // --------------------------------------------------------------------- //
+    // UPPERAXISLIMIT 
+    // --------------------------------------------------------------------- //
+    /// Upper limit on rotation around the joint axis. Default inf
+    /// means not limited in positive direction. The axis is locked if the lower
+    /// limit is larger than the upper limit. Units: degrees
+    ///
+    /// | ||
+    /// | -- | -- |
+    /// | Declaration | `float physics:upperAxisLimit = inf` |
+    /// | C++ Type | float |
+    /// | \ref Usd_Datatypes "Usd Type" | SdfValueTypeNames->Float |
+    USDPHYSICS_API
+    UsdAttribute GetUpperAxisLimitAttr() const;
+
+    /// See GetUpperAxisLimitAttr(), and also 
+    /// \ref Usd_Create_Or_Get_Property for when to use Get vs Create.
+    /// If specified, author \p defaultValue as the attribute's default,
+    /// sparsely (when it makes sense to do so) if \p writeSparsely is \c true -
+    /// the default for \p writeSparsely is \c false.
+    USDPHYSICS_API
+    UsdAttribute CreateUpperAxisLimitAttr(VtValue const &defaultValue = VtValue(), bool writeSparsely=false) const;
 
 public:
     // ===================================================================== //

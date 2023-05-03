@@ -24,38 +24,38 @@ over "GLOBAL" (
             }
         dictionary transX = {
             string doc = """
-            This token represents the translate around X axis degree of freedom
-            used in Joint Limits and Drives.
+            This token represents the translation in the X-axis degree of
+            freedom used in Joint Limits and Drives.
             """
             }
         dictionary transY = {
             string doc = """
-            This token represents the translate around Y axis degree of freedom
-            used in Joint Limits and Drives.
+            This token represents the translation in the Y-axis degree of
+            freedom used in Joint Limits and Drives.
             """
             }
         dictionary transZ = {
             string doc = """
-            This token represents the translate around Z axis degree of freedom
-            used in Joint Limits and Drives.
+            This token represents the translation in the Z-axis degree of
+            freedom used in Joint Limits and Drives.
             """
             }
         dictionary rotX = {
             string doc = """
-            This token represents the rotate around X axis degree of freedom
-            used in Joint Limits and Drives.
+            This token represents the rotation around the X-axis degree of
+            freedom used in Joint Limits and Drives.
             """
             }
         dictionary rotY = {
             string doc = """
-            This token represents the rotate around Y axis degree of freedom
-            used in Joint Limits and Drives.
+            This token represents the rotation around the Y-axis degree of
+            freedom used in Joint Limits and Drives.
             """
             }
         dictionary rotZ = {
             string doc = """
-            This token represents the rotate around Z axis degree of freedom
-            used in Joint Limits and Drives.
+            This token represents the rotation around the Z-axis degree of
+            freedom used in Joint Limits and Drives.
             """
             }
         dictionary linear = {
@@ -658,10 +658,35 @@ class PhysicsSphericalJoint "PhysicsSphericalJoint"
     customData = {
         string className = "SphericalJoint"
     }
-    doc = """Predefined spherical joint type (Removes linear degrees of 
-    freedom, cone limit may restrict the motion in a given range.) It allows
-    two limit values, which when equal create a circular, else an elliptic 
-    cone limit around the limit axis."""
+    doc = """Predefined spherical joint type that removes linear degrees of 
+    freedom, and that provides three rotational degrees of freedom by default.
+    The rotations can be limited with the cone and axis limit attributes:
+
+    The lower and upper axis-limit attributes limit rotation around the joint
+    axis. The axis rotation is locked when the lower limit is larger than the
+    upper limit.
+
+    The cone angle 0 and 1 limits create a cone limit with the the joint axis
+    equal to the cone axis; the cone limit is circular if the two cone angles
+    are equal, and the cone limit is elliptical if the angles are not equal.
+    
+    Given the joint-axis token, the two cone limit angles map to the specific
+    joint-frame rotation axes as follows:
+
+    Joint Axis   |   Cone Angle0 limits   |   Cone Angle 1 limits
+    -------------|------------------------|----------------------
+        X        |          Y             |          Z
+        Y        |          Z             |          X
+        Z        |          X             |          Y
+
+    Example: Shown are the aligned spherical-joint frames centered between two
+    rigid bodies to be joined. The joint axis is set to Y (green), the Cone
+    Angle 0 is set to 10 degrees and Cone Angle 1 is set to 45 degrees. Note the
+    narrower cone extent for the rotation around the Z axis (blue) compared to
+    the X axis (red) rotation.
+
+    \\image html UsdPhysicsSphericalJointLimitCone.png
+    """
 
     inherits = </PhysicsJoint>
 )
@@ -672,7 +697,7 @@ class PhysicsSphericalJoint "PhysicsSphericalJoint"
         }
         allowedTokens = ["X", "Y", "Z"]
         displayName = "Axis"
-        doc = """Cone limit axis."""
+        doc = """Joint axis."""
     )  
 
     float physics:coneAngle0Limit = -1.0 (
@@ -680,9 +705,9 @@ class PhysicsSphericalJoint "PhysicsSphericalJoint"
             string apiName = "coneAngle0Limit"
         }
         displayName = "Cone Angle0 Limit"
-        doc = """Cone limit from the primary joint axis in the local0 frame 
-        toward the next axis. (Next axis of X is Y, and of Z is X.) A 
-        negative value means not limited. Units: degrees."""
+        doc = """Cone angle that limits rotation symmetrically around the axis
+        next to the joint axis. The next axis of X is Y, and of Z is X.
+        A negative value means not limited. Units: degrees."""
     )
 
     float physics:coneAngle1Limit = -1.0 (
@@ -690,9 +715,29 @@ class PhysicsSphericalJoint "PhysicsSphericalJoint"
             string apiName = "coneAngle1Limit"
         }
         displayName = "Cone Angle1 Limit"
-        doc = """Cone limit from the primary joint axis in the local0 frame 
-        toward the second to next axis. A negative value means not limited. 
-        Units: degrees."""
+        doc = """Cone angle that limits rotation symmetrically around the axis
+        second to next to the joint axis. The second to next axis of X is Z,
+        and of Z is Y. A negative value means not limited. Units: degrees."""
+    )
+
+    float physics:lowerAxisLimit = -inf (
+        customData = {
+            string apiName = "lowerAxisLimit"
+        }
+        displayName = "Joint Axis Lower Limit "
+        doc = """Lower limit on rotation around the joint axis. Default -inf
+        means not limited in negative direction. The axis is locked if the lower
+        limit is larger than the upper limit. Units: degrees"""
+    )
+
+    float physics:upperAxisLimit = inf (
+        customData = {
+            string apiName = "upperAxisLimit"
+        }
+        displayName = "Joint Axis Upper Limit "
+        doc = """Upper limit on rotation around the joint axis. Default inf
+        means not limited in positive direction. The axis is locked if the lower
+        limit is larger than the upper limit. Units: degrees"""
     )
 }
 

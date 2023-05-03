@@ -154,6 +154,40 @@ UsdPhysicsSphericalJoint::CreateConeAngle1LimitAttr(VtValue const &defaultValue,
                        writeSparsely);
 }
 
+UsdAttribute
+UsdPhysicsSphericalJoint::GetLowerAxisLimitAttr() const
+{
+    return GetPrim().GetAttribute(UsdPhysicsTokens->physicsLowerAxisLimit);
+}
+
+UsdAttribute
+UsdPhysicsSphericalJoint::CreateLowerAxisLimitAttr(VtValue const &defaultValue, bool writeSparsely) const
+{
+    return UsdSchemaBase::_CreateAttr(UsdPhysicsTokens->physicsLowerAxisLimit,
+                       SdfValueTypeNames->Float,
+                       /* custom = */ false,
+                       SdfVariabilityVarying,
+                       defaultValue,
+                       writeSparsely);
+}
+
+UsdAttribute
+UsdPhysicsSphericalJoint::GetUpperAxisLimitAttr() const
+{
+    return GetPrim().GetAttribute(UsdPhysicsTokens->physicsUpperAxisLimit);
+}
+
+UsdAttribute
+UsdPhysicsSphericalJoint::CreateUpperAxisLimitAttr(VtValue const &defaultValue, bool writeSparsely) const
+{
+    return UsdSchemaBase::_CreateAttr(UsdPhysicsTokens->physicsUpperAxisLimit,
+                       SdfValueTypeNames->Float,
+                       /* custom = */ false,
+                       SdfVariabilityVarying,
+                       defaultValue,
+                       writeSparsely);
+}
+
 namespace {
 static inline TfTokenVector
 _ConcatenateAttributeNames(const TfTokenVector& left,const TfTokenVector& right)
@@ -174,6 +208,8 @@ UsdPhysicsSphericalJoint::GetSchemaAttributeNames(bool includeInherited)
         UsdPhysicsTokens->physicsAxis,
         UsdPhysicsTokens->physicsConeAngle0Limit,
         UsdPhysicsTokens->physicsConeAngle1Limit,
+        UsdPhysicsTokens->physicsLowerAxisLimit,
+        UsdPhysicsTokens->physicsUpperAxisLimit,
     };
     static TfTokenVector allNames =
         _ConcatenateAttributeNames(

@@ -258,6 +258,10 @@ struct UsdPhysicsTokensType {
     /// 
     /// UsdPhysicsJoint
     const TfToken physicsLocalRot1;
+    /// \brief "physics:lowerAxisLimit"
+    /// 
+    /// UsdPhysicsSphericalJoint
+    const TfToken physicsLowerAxisLimit;
     /// \brief "physics:lowerLimit"
     /// 
     /// UsdPhysicsRevoluteJoint, UsdPhysicsPrismaticJoint
@@ -302,6 +306,10 @@ struct UsdPhysicsTokensType {
     /// 
     /// UsdPhysicsMaterialAPI
     const TfToken physicsStaticFriction;
+    /// \brief "physics:upperAxisLimit"
+    /// 
+    /// UsdPhysicsSphericalJoint
+    const TfToken physicsUpperAxisLimit;
     /// \brief "physics:upperLimit"
     /// 
     /// UsdPhysicsRevoluteJoint, UsdPhysicsPrismaticJoint
@@ -312,27 +320,27 @@ struct UsdPhysicsTokensType {
     const TfToken physicsVelocity;
     /// \brief "rotX"
     /// 
-    ///  This token represents the rotate around X axis degree of freedom used in Joint Limits and Drives. 
+    ///  This token represents the rotation around the X-axis degree of freedom used in Joint Limits and Drives. 
     const TfToken rotX;
     /// \brief "rotY"
     /// 
-    ///  This token represents the rotate around Y axis degree of freedom used in Joint Limits and Drives. 
+    ///  This token represents the rotation around the Y-axis degree of freedom used in Joint Limits and Drives. 
     const TfToken rotY;
     /// \brief "rotZ"
     /// 
-    ///  This token represents the rotate around Z axis degree of freedom used in Joint Limits and Drives. 
+    ///  This token represents the rotation around the Z-axis degree of freedom used in Joint Limits and Drives. 
     const TfToken rotZ;
     /// \brief "transX"
     /// 
-    ///  This token represents the translate around X axis degree of freedom used in Joint Limits and Drives. 
+    ///  This token represents the translation in the X-axis degree of freedom used in Joint Limits and Drives. 
     const TfToken transX;
     /// \brief "transY"
     /// 
-    ///  This token represents the translate around Y axis degree of freedom used in Joint Limits and Drives. 
+    ///  This token represents the translation in the Y-axis degree of freedom used in Joint Limits and Drives. 
     const TfToken transY;
     /// \brief "transZ"
     /// 
-    ///  This token represents the translate around Z axis degree of freedom used in Joint Limits and Drives. 
+    ///  This token represents the translation in the Z-axis degree of freedom used in Joint Limits and Drives. 
     const TfToken transZ;
     /// \brief "X"
     /// 

@@ -69,6 +69,20 @@ _CreateConeAngle1LimitAttr(UsdPhysicsSphericalJoint &self,
     return self.CreateConeAngle1LimitAttr(
         UsdPythonToSdfType(defaultVal, SdfValueTypeNames->Float), writeSparsely);
 }
+        
+static UsdAttribute
+_CreateLowerAxisLimitAttr(UsdPhysicsSphericalJoint &self,
+                                      object defaultVal, bool writeSparsely) {
+    return self.CreateLowerAxisLimitAttr(
+        UsdPythonToSdfType(defaultVal, SdfValueTypeNames->Float), writeSparsely);
+}
+        
+static UsdAttribute
+_CreateUpperAxisLimitAttr(UsdPhysicsSphericalJoint &self,
+                                      object defaultVal, bool writeSparsely) {
+    return self.CreateUpperAxisLimitAttr(
+        UsdPythonToSdfType(defaultVal, SdfValueTypeNames->Float), writeSparsely);
+}
 
 static std::string
 _Repr(const UsdPhysicsSphericalJoint &self)
@@ -130,6 +144,20 @@ void wrapUsdPhysicsSphericalJoint()
              &This::GetConeAngle1LimitAttr)
         .def("CreateConeAngle1LimitAttr",
              &_CreateConeAngle1LimitAttr,
+             (arg("defaultValue")=object(),
+              arg("writeSparsely")=false))
+        
+        .def("GetLowerAxisLimitAttr",
+             &This::GetLowerAxisLimitAttr)
+        .def("CreateLowerAxisLimitAttr",
+             &_CreateLowerAxisLimitAttr,
+             (arg("defaultValue")=object(),
+              arg("writeSparsely")=false))
+        
+        .def("GetUpperAxisLimitAttr",
+             &This::GetUpperAxisLimitAttr)
+        .def("CreateUpperAxisLimitAttr",
+             &_CreateUpperAxisLimitAttr,
              (arg("defaultValue")=object(),
               arg("writeSparsely")=false))
 
